@@ -1,12 +1,33 @@
-#control-panel {
+.control-panel {
     background-color: #fff;
-    height: 25px;
     display: flex;
     align-items: center;
     flex-direction: column;
     padding-top: 5px;
+    padding-bottom: 5px;
 }
-#format-actions {
-    width: 200px;
+.format-actions {
     margin-right: 400px;
+}
+.btn {
+    background-color: DodgerBlue;
+    color: white; 
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.toolbar
+{
+    display: block;
+    border:solid 1px #ddd;
+    background:#f4f4f4;
+    padding: 5px;
+    border-radius:3px;
+}
+.btn:focus {
+    outline:0;
+}
+
+.active{
+    background-color: royalblue;
 }

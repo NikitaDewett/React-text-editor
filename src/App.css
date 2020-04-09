@@ -19,3 +19,15 @@ main {
   flex-direction: column;
   flex-grow: 1;
 }
+.main-container {
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-block;
+}
+.components-holder {
+  display: block;
+  margin-top: 2%;
+  border: solid 1px #ddd;
+  border-radius: 3px;
+  background: #f4f4f4;
+}
