@@ -15,7 +15,7 @@ class SynonymsModal extends Component {
     /**
      * Close modal window
      */
-    closeModal() {
+    closeModal = () => {
         this.setState({ isOpened: false });
     };
 
@@ -25,7 +25,7 @@ class SynonymsModal extends Component {
      * @param postion {obj} obj with x/y positions
      */
     async openModal(text, postion) {
-        let synonyms = await getSynonyms(text)
+        let synonyms = await getSynonyms(text);
         synonyms = synonyms.map(item => {
             return item.word
         })
@@ -38,7 +38,7 @@ class SynonymsModal extends Component {
      * to the text area via callback
      * @param e {event} tags of selected word
      */
-    selectSynonym(e) {
+    selectSynonym = e => {
         this.props.callback(e.target.textContent)
         this.setState({ isOpened: false });
     };
@@ -49,13 +49,13 @@ class SynonymsModal extends Component {
             <div className="modal-dialog" ref={this.modal}>
                 <div className="modal-content">
                     <div className="modal-header">
-                        <a onClick={(e) => this.closeModal()} title="Close" className="close">×</a>
+                        <a onClick={this.closeModal} title="Close" className="close">×</a>
                     </div>
                     <div className="modal-body">
                         <ul>
                             {this.state.synonymsArr.length ?
                                 this.state.synonymsArr.map(synonym => (
-                                    <li key={synonym}><button className="btn success" onClick={(e) => { this.selectSynonym(e) }}>{synonym}</button></li>
+                                    <li key={synonym}><button className="btn success" onClick={this.selectSynonym}>{synonym}</button></li>
                                 )) :
                                 <li className='no-synonyms' key={'noSynonyms'}>No synonyms were found</li>
                             }

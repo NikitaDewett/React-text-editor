@@ -5,12 +5,9 @@ import axios from 'axios';
  * @param word {string} word of which we're looking for synonyms
  * @returns {Promise}
  */
-async function getSynonyms(word) {
-  return await axios.get(`https://api.datamuse.com/words?ml=${word}&max=5`)
-    .then(res => {
-      return res.data
-    });
-};
+const getSynonyms = (word) => 
+  axios.get(`https://api.datamuse.com/words?ml=${word}&max=5`)
+    .then(res => res.data);
 
 export {
   getSynonyms

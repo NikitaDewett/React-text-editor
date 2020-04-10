@@ -132,7 +132,7 @@ class TextInput extends Component {
             <React.Fragment>
                 <SynonymsModal ref={this.modalRef} callback={this.applySynonym.bind(this)} />
                 <ContentEditable
-                    onClick={(e) => this.handleChange(e)}
+                    onClick={this.handleChange}
                     className="editor"
                     innerRef={this.textArea}
                     html={this.state.html}
