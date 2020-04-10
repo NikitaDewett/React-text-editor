@@ -1,9 +1,22 @@
 import React, {Component} from 'react';
 import './App.css';
 import ControlPanel from "./control-panel/ControlPanel";
-import FileZone from "./file-zone/FileZone";
+import TextInput from "./text-input/TextInput";
 
 class App extends Component {
+
+    constructor(props) {
+        super(props)
+        this.controlPanelRef = React.createRef();
+    }
+
+    textInputCallback(inputTags){
+        this.updateControlPanel(inputTags)
+    }
+
+    updateControlPanel(inputTags){
+        this.controlPanelRef.current.updateButtons(inputTags)
+    }
     render() {
         return (
             <div className="App">
@@ -13,8 +26,8 @@ class App extends Component {
                 <main>
                     <div className="main-container">
                         <div className="components-holder">
-                            <ControlPanel/>
-                            <FileZone/>
+                            <ControlPanel ref={this.controlPanelRef}/>
+                            <TextInput callback={this.textInputCallback.bind(this)}/>
                         </div>
                     </div>
                 </main>

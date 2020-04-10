@@ -7,21 +7,43 @@ class ControlPanel extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            boldActive: false, 
-            italicActive: false, 
+            boldActive: false,
+            italicActive: false,
             underlineActive: false
         };
-    }
+    };
 
+    /**
+     * Highlight buttons due to the applied format of the word
+     * @param inputTags {Array} tags of selected word
+     */
+    updateButtons(inputTags) {
+        inputTags.indexOf('B') !== -1 ? this.setState({ boldActive: true }) : this.setState({ boldActive: false });
+        inputTags.indexOf('I') !== -1 ? this.setState({ italicActive: true }) : this.setState({ italicActive: false });
+        inputTags.indexOf('U') !== -1 ? this.setState({ underlineActive: true }) : this.setState({ underlineActive: false });
+    };
+
+    /**
+     * Enable chosen formatting
+     * @param event {event} tags of selected word
+     * @param buttonCommand {string} type of formating
+     * @param value additional params for execCommand
+     */
     formatText(event, buttonCommand, value) {
         this.setState({
             [`${buttonCommand}Active`]: !this.state[`${buttonCommand}Active`]
         });
         document.execCommand(buttonCommand, false, value);
-    }
-    getButtonClass(buttonType){
+    };
+
+    /**
+     * Get class of the button due to applied formatting
+     * @param buttonType {string} tags of selected word
+     * @returns {string} class of the button    
+     */
+    getButtonClass(buttonType) {
         return this.state[`${buttonType}Active`] ? `fa fa-${buttonType} btn active` : `fa fa-${buttonType} btn`;
-    }
+    };
 
     render() {
         return (

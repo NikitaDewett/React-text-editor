@@ -1,5 +1,5 @@
-.editor
-{   padding: 5px;
+.editor{   
+    padding: 10px;
     min-height:200px;
 }
 .editor:focus{
