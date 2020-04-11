@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import './ControlPanel.css';
 import 'font-awesome/css/font-awesome.min.css';
 
-class ControlPanel extends Component {
+class ControlPanel extends PureComponent {
 
     constructor(props) {
         super(props)
@@ -11,6 +11,7 @@ class ControlPanel extends Component {
             italicActive: false,
             underlineActive: false
         };
+        this.buttonTypes = [{type:'bold'}, {type: 'italic'}, {type: 'underline'}];
     };
 
     /**
@@ -18,30 +19,31 @@ class ControlPanel extends Component {
      * @param inputTags {Array} tags of selected word
      */
     updateButtons(inputTags) {
-        inputTags.indexOf('B') !== -1 ? this.setState({ boldActive: true }) : this.setState({ boldActive: false });
-        inputTags.indexOf('I') !== -1 ? this.setState({ italicActive: true }) : this.setState({ italicActive: false });
-        inputTags.indexOf('U') !== -1 ? this.setState({ underlineActive: true }) : this.setState({ underlineActive: false });
+        this.setState({
+            boldActive: inputTags.includes('B'),
+            italicActive: inputTags.includes('I'),
+            underlineActive: inputTags.includes('U')
+        })
     };
 
     /**
      * Enable chosen formatting
      * @param event {event} tags of selected word
-     * @param buttonCommand {string} type of formating
-     * @param value additional params for execCommand
      */
-    formatText(event, buttonCommand, value) {
+    formatText = (event) => {
+        const buttonCommand = event.target.value;
         this.setState({
             [`${buttonCommand}Active`]: !this.state[`${buttonCommand}Active`]
         });
-        document.execCommand(buttonCommand, false, value);
+        document.execCommand(buttonCommand, false);
     };
 
     /**
      * Get class of the button due to applied formatting
      * @param buttonType {string} tags of selected word
-     * @returns {string} class of the button    
+     * @returns {string} class of the button
      */
-    getButtonClass(buttonType) {
+    getButtonClass = (buttonType) => {
         return this.state[`${buttonType}Active`] ? `fa fa-${buttonType} btn active` : `fa fa-${buttonType} btn`;
     };
 
@@ -49,9 +51,9 @@ class ControlPanel extends Component {
         return (
             <div className="control-panel">
                 <div className="format-actions toolbar">
-                    <button className={this.getButtonClass('bold')} type="button" onClick={(e) => this.formatText(e, 'bold')}></button>
-                    <button className={this.getButtonClass('italic')} type="button" onClick={(e) => this.formatText(e, 'italic')}></button>
-                    <button className={this.getButtonClass('underline')} type="button" onClick={(e) => this.formatText(e, 'underline')}></button>
+                    {this.buttonTypes.map(button => 
+                        <button key={button.type} className={this.getButtonClass(button.type)} value={button.type} type="button" onClick={this.formatText} />
+                    )}
                 </div>
             </div>
         );

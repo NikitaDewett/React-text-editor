@@ -10,7 +10,7 @@ class App extends Component {
         this.controlPanelRef = React.createRef();
     }
 
-    textInputCallback(inputTags){
+    textInputCallback = (inputTags) => {
         this.updateControlPanel(inputTags)
     }
 
@@ -27,7 +27,7 @@ class App extends Component {
                     <div className="main-container">
                         <div className="components-holder">
                             <ControlPanel ref={this.controlPanelRef}/>
-                            <TextInput callback={this.textInputCallback.bind(this)}/>
+                            <TextInput callback={this.textInputCallback}/>
                         </div>
                     </div>
                 </main>

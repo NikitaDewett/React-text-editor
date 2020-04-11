@@ -45,6 +45,14 @@ class TextInput extends Component {
             endElement,
             curElement;
 
+        /**
+         * push all parent tags when more than 1 word is selected
+         * @param range {object}
+         */
+        var addParentTags = (range) =>{
+            range.forEach(e => rangeParentTags.push(e.nodeName));
+        }
+
         // For all ranges
         for (let i = 0; i < numRanges; i++) {
             // Start container of range
@@ -72,6 +80,10 @@ class TextInput extends Component {
                     rangeParentTags.push(curElement.nodeName);
                     curElement = curElement.parentNode;
                 }
+            } else{
+                //Here we're getting all tags for all words in the selection
+                var range = window.getSelection().getRangeAt(i).cloneContents().querySelectorAll('*');
+                addParentTags(range);
             }
             // Push tags of current range 
             allRangesParentTags.push(rangeParentTags);
@@ -97,14 +109,19 @@ class TextInput extends Component {
         } else{
             this.modalRef.current.closeModal();
         }
-        this.props.callback(menuTagsCommon);
+        let isEqualNodes = this.selectedText.anchorNode.isEqualNode(this.selectedText.focusNode) && editorElement.isEqualNode(this.selectedText.anchorNode)
+
+        if(!isEqualNodes){
+            this.props.callback(menuTagsCommon);
+        }
+
     };
 
     /**
      * Apply chosen synonym from modal 
      * @param synonym {sting} 
      */
-    applySynonym(synonym) {
+    applySynonym = synonym => {
         this.replaceSelectedText(synonym);
     };
 
@@ -127,10 +144,20 @@ class TextInput extends Component {
         }
     }
 
+    componentDidMount(){
+        var el = this.textArea.current;
+        var range = document.createRange();
+        var sel = window.getSelection();
+        range.setStart(el, 0);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
+
     render() {
         return (
             <React.Fragment>
-                <SynonymsModal ref={this.modalRef} callback={this.applySynonym.bind(this)} />
+                <SynonymsModal ref={this.modalRef} callback={this.applySynonym} />
                 <ContentEditable
                     onClick={this.handleChange}
                     className="editor"
