@@ -36,6 +36,7 @@ class ControlPanel extends PureComponent {
             [`${buttonCommand}Active`]: !this.state[`${buttonCommand}Active`]
         });
         document.execCommand(buttonCommand, false);
+        event.preventDefault();
     };
 
     /**
@@ -52,7 +53,7 @@ class ControlPanel extends PureComponent {
             <div className="control-panel">
                 <div className="format-actions toolbar">
                     {this.buttonTypes.map(button => 
-                        <button key={button.type} className={this.getButtonClass(button.type)} value={button.type} type="button" onClick={this.formatText} />
+                        <button key={button.type} className={this.getButtonClass(button.type)} value={button.type} type="button" onMouseDown={this.formatText}/>
                     )}
                 </div>
             </div>
