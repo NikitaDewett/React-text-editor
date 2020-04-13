@@ -145,10 +145,18 @@ class TextInput extends Component {
     }
 
     componentDidMount(){
-        var el = this.textArea.current;
+        this.setCaretPosition(this.textArea.current, 0)
+    }
+
+    /**
+     * Place caret in the el with ofsset num 
+     * @param el {Node} el where we will place caret
+     * @param offset {number} place of caret
+     */
+    setCaretPosition(el, offset){
         var range = document.createRange();
         var sel = window.getSelection();
-        range.setStart(el, 0);
+        range.setStart(el, offset);
         range.collapse(true);
         sel.removeAllRanges();
         sel.addRange(range);
