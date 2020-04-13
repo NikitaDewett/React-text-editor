@@ -4,7 +4,7 @@ Run `npm install` in order to setup application
 ## Development server
 Run `npm start` to start an app.
 
-##FAQ
+## FAQ
 The app have text area, where user can write text and three buttons with formatting options.
 User can apply all options at the same time.
 
